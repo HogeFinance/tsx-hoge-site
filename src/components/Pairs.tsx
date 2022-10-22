@@ -33,7 +33,7 @@ const Pairs = () => {
     const makePairLine= (link:string, chain:string, swap:string, address:string) => {
         return (
             <h3>
-                {chain} <a href={link} target='_blank' rel="noreferrer">{swap}</a> dex pair<br/>
+                {chain} dex pair <a href={link} target='_blank' rel="noreferrer">{swap}</a><br/>
                 <small>{address}</small>
             </h3>
         )
