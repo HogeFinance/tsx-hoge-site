@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import {ethers} from 'ethers'
+import { ethers } from 'ethers'
+import './Pairs.css'
+
 /*
 class Chains {
     eth = EvmChain.ETHEREUM;
@@ -22,7 +24,7 @@ class Hoge {
 class Pair {
     eth = "0x7FD1de95FC975fbBD8be260525758549eC477960"
     bsc = "0xCed4F946feBCAc72d6727C07dE5B2664b2267a6F"
-    polygon = ""
+    polygon = "?"
     ftm = "0xF31778D591c558140398F46feCA42A6a2dbFFe90"
     xdai = "0xaf67e4b3dfe7fddbbc3c54047285fde72eaefd7c"
     okc = "0x6301Ce2a18410ad80c8511cA20288933dC32d61F"
@@ -34,18 +36,38 @@ const Pairs = () => {
     const [result, setResult] = useState<any>()
     
     React.useEffect(() => {
-        
+        const hoge = new Hoge()
+        const contracts = <h3 className='address'>
+            Eth contract<br/>{hoge.eth}<p/>
+            BSC contract <br/>{hoge.bsc}<p/>
+            Polygon contract <br/>{hoge.polygon}<p/>
+            FTM contract <br/>{hoge.ftm}<p/>
+            xDai contract <br/>{hoge.xdai}<p/>
+            OKC contract <br/>{hoge.okc}<p/>
+        </h3>
+        const pair = new Pair()
+        const pairs = <h3 className='pair'>
+            Eth Uniswap dex pair WETH/HOGE<br/>{pair.eth}<p/>
+            BSC Pancakeswap dex pair BNB/HOGE<br/>{pair.bsc}<p/>
+            Polygon ? dex pair MATIC/HOGE<br/>{pair.polygon}<p/>
+            FTM Shibaswap dex pair FTM/HOGE<br/>{pair.ftm}<p/>
+            xDai Honeyswap dex pair XDAI/HOGE<br/>{pair.xdai}<p/>
+            OKC Cherryswap dex pair USDT/HOGE<br/>{pair.okc}<p/>
+        </h3>
+
         const go = async () => {            
             var url = 'https://mainnet.infura.io/v3/' + process.env.REACT_APP_INFURA_API_KEY;
             var customHttpProvider = new ethers.providers.JsonRpcProvider(url);
             customHttpProvider.getBlockNumber().then((result) => {
                 setResult("Current ETH block number: " +  result)
             })
-            setThing(<>{result}</>)
+            setThing(<div className='infoDiv'><h2>{result}</h2>{contracts}{pairs}</div>)
         }
         go()
         
     }, [result])
+
+
 
     return (<>{thing}</>)
 }
