@@ -6,18 +6,25 @@
     border: 10px ridge #0d43d8d8;
     padding: 25px;
     padding-top: 0px;
+    
 }
 
 .address {
     text-shadow: 2px 1px #0d43d8d8;
     border: 10px ridge #0d43d8d8;
     padding: 15px;
-    margin: 10px;
+    padding-top: 0px;
+    margin: 5px 15px;
 }
 
 .pair {
     text-shadow: 2px 1px #0d43d8d8;
     border: 10px ridge #0d43d8d8;
     padding: 15px;
-    margin: 10px;
+    padding-top: 0px;
+    margin: 5px 15px;
+}
+
+a {
+    text-shadow: none;
 }
