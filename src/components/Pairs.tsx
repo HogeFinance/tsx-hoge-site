@@ -20,7 +20,7 @@ class Pair {
 }
 
 const Pairs = () => {
-    const [thing, setThing] = useState<JSX.Element>(<>{''}</>)
+    const [info, setInfo] = useState<JSX.Element>(<>{''}</>)
     const [result, setResult] = useState<any>()
     const makeContractLine = (link:string, text:string, address:string) => {
         return (
@@ -63,11 +63,11 @@ const Pairs = () => {
             customHttpProvider.getBlockNumber().then((result) => {
                 setResult("Current ETH block number: " +  result)
             })
-            setThing(<div className='infoDiv'><h2>{result}</h2>{contracts}{pairs}</div>)
+            setInfo(<div className='infoDiv'><h2>{result}</h2>{contracts}{pairs}</div>)
         }
         go()    
     }, [result])
-    return (<>{thing}</>)
+    return info
 }
     
 export default Pairs
