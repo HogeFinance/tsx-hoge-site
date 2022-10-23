@@ -13,7 +13,7 @@ class Hoge {
 class Pair {
     eth = "0x7FD1de95FC975fbBD8be260525758549eC477960"
     bsc = "0xCed4F946feBCAc72d6727C07dE5B2664b2267a6F"
-    polygon = "?"
+    polygon = "0x15B09d465Ec44B6378dC92059fbDF0e4f65AEF43"
     ftm = "0xda6115d4ecec98d1fe02c69d846405d41049eed2"
     xdai = "0xaf67e4b3dfe7fddbbc3c54047285fde72eaefd7c"
     okc = "0x6301Ce2a18410ad80c8511cA20288933dC32d61F"
@@ -31,9 +31,13 @@ const Pairs = () => {
         )
     }
     const makePairLine= (link:string, chain:string, swap:string, address:string) => {
+        let url:string
+        if(chain === 'Polygon') {
+            url = link + '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0x58c1BBb508e96CfEC1787Acf6Afe1C7008A5B064?fee=100&twap=true&chainId=137'
+        } else { url = link + address}
         return (
             <h3>
-                {chain} dex pair <a href={link + address} target='_blank' rel="noreferrer">{swap}</a>
+                {chain} dex pair <a href={url} target='_blank' rel="noreferrer">{swap}</a>
                 <br/><small>{address}</small>
             </h3>
         )
@@ -52,7 +56,7 @@ const Pairs = () => {
         const pairs = <div className='pair'>
             {makePairLine('https://v2.info.uniswap.org/pair/', 'Eth', 'Uniswap', pair.eth)}
             {makePairLine('https://pancakeswap.finance/info/pools/', 'BSC','Pancakeswap', pair.bsc)}
-            {makePairLine('https://app.sushi.com/analytics/pairs/', 'Polygon','Sushiswap', pair.polygon)}
+            {makePairLine('https://app.sushi.com/trident/pool/', 'Polygon','Sushiswap', pair.polygon)}
             {makePairLine('https://info.shibafantom.finance/pair/', 'FTM','Shibaswap', pair.ftm)}
             {makePairLine('https://info.honeyswap.org/#/pair/', 'xDai','Honeyswap', pair.xdai)}
             {makePairLine('https://okinfo.cherryswap.net/pair/', 'OKC','Cherryswap', pair.okc)}
