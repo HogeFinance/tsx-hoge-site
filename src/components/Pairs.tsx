@@ -44,7 +44,7 @@ const Pairs = () => {
     }
     React.useEffect(() => {
         const hoge = new Hoge()
-        const contracts = <div className='address'>
+        const contracts = <div className='someBorder'>
             {makeContractLine('https://etherscan.io/token/', 'Eth', hoge.eth)}
             {makeContractLine('https://bscscan.com/address/', 'BSC', hoge.bsc)}
             {makeContractLine('https://polygonscan.com/address/', 'Polygon', hoge.polygon)}
@@ -53,7 +53,7 @@ const Pairs = () => {
             {makeContractLine('https://www.oklink.com/en/okc/address/', 'OKC', hoge.okc)}
         </div>
         const pair = new Pair()
-        const pairs = <div className='pair'>
+        const pairs = <div className='someBorder'>
             {makePairLine('https://v2.info.uniswap.org/pair/', 'Eth', 'Uniswap', pair.eth)}
             {makePairLine('https://pancakeswap.finance/info/pools/', 'BSC','Pancakeswap', pair.bsc)}
             {makePairLine('https://app.sushi.com/trident/pool/', 'Polygon','Sushiswap', pair.polygon)}
@@ -67,7 +67,7 @@ const Pairs = () => {
             customHttpProvider.getBlockNumber().then((result) => {
                 setResult("Current ETH block number: " +  result)
             })
-            setInfo(<div className='infoDiv'><h2>{result}</h2>{contracts}{pairs}</div>)
+            setInfo(<div className='someBorder'><h2 id='ethBlock'>{result}</h2><div className='infoDiv'>{contracts}{pairs}</div></div>)
         }
         go()    
     }, [result])

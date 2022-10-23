@@ -3,28 +3,30 @@
     font-size: medium;
     color: rgba(66, 231, 0, 0.936);
     text-shadow: 2px 1px #0d43d8d8;
-    border: 10px ridge #0d43d8d8;
-    padding: 25px;
-    padding-top: 0px;
-    
+    padding: 10px;
+
+    display: flex;
+    flex-direction: row;
 }
 
-.address {
-    text-shadow: 2px 1px #0d43d8d8;
+.someBorder {
     border: 10px ridge #0d43d8d8;
-    padding: 15px;
-    padding-top: 0px;
-    margin: 5px 15px;
-}
-
-.pair {
-    text-shadow: 2px 1px #0d43d8d8;
-    border: 10px ridge #0d43d8d8;
-    padding: 15px;
-    padding-top: 0px;
-    margin: 5px 15px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: 15px;
 }
 
 a {
     text-shadow: none;
+}
+
+#ethBlock {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 1em;
+    letter-spacing: 2px;
+    color: #babababa;
+    font-weight: 400;
+    text-transform: capitalize;
 }
