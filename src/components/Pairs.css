@@ -4,9 +4,8 @@
     color: rgba(66, 231, 0, 0.936);
     text-shadow: 2px 1px #0d43d8d8;
     padding: 10px;
-
     display: flex;
-    flex-direction: row;
+
 }
 
 .someBorder {
@@ -29,4 +28,28 @@ a {
     color: #babababa;
     font-weight: 400;
     text-transform: capitalize;
+}
+
+@media screen and (min-width: 1160px) {
+    .infoDiv {
+        flex-direction: row;
+    }
+}
+@media screen and (min-width: 600px) and (max-width: 1160px) {
+    .infoDiv {
+        flex-direction: column;
+    }
+}
+@media screen and (max-width: 600px) {
+    .infoDiv {
+        flex-direction: column;
+        font-size: x-small;
+        padding: 1px;
+    }
+    .someBorder{
+        padding: 2px;
+    }
+    #ethBlock {
+        font-size: .7em;
+    }
 }
