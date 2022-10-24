@@ -6,7 +6,7 @@ const Pairs = () => {
     const [info, setInfo] = useState<JSX.Element>(<>{''}</>)
     const [block, setBlock] = useState<any>()
     const [gas, setGas] = useState<any>()
-
+    const [wait, setWait] = useState<boolean>(false)
 
     useEffect(() => {
         
@@ -74,20 +74,20 @@ const Pairs = () => {
             </div>)
         }
 
-        const go =  () => {
+        const go = async () => {
             if (block !== undefined || gas !== undefined) {return}
             const api = process.env.REACT_APP_INFURA_API_KEY
             if (api!==undefined) {
                 var url = 'https://mainnet.infura.io/v3/' + api
                 var customHttpProvider = new ethers.providers.JsonRpcProvider(url)
                 if (block === undefined){
-                     customHttpProvider.getBlockNumber()
+                    await customHttpProvider.getBlockNumber()
                     .then((res) => {
                         setBlock("Current ETH block number: " +  res)
                     })
                 }
                 if (gas === undefined) {
-                    customHttpProvider.getGasPrice()
+                    await customHttpProvider.getGasPrice()
                     .then((res) => {
                         const wei = res.mul(10**9)
 
@@ -106,15 +106,17 @@ const Pairs = () => {
         function clearStates() {
             setBlock(undefined)
             setGas(undefined)
-
+            setWait(false)
         }
 
-        go()    
+        if (!wait){
+            go()
+            setWait(true)
+            const min = 60 * 1000
+            window.setTimeout(clearStates, .1*min)
+        }
         
-        const min = 60 * 1000
-        window.setTimeout(clearStates, 1*min)
-        
-    }, [block, gas])
+    }, [block, gas, wait])
 
     return info
 }
