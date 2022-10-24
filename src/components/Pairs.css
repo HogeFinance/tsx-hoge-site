@@ -30,6 +30,11 @@ a {
     text-transform: capitalize;
 }
 
+#note {
+    margin: 10px;
+    font-size: .4em;
+}
+
 @media screen and (min-width: 1160px) {
     .infoDiv {
         flex-direction: row;

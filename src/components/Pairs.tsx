@@ -69,7 +69,10 @@ const Pairs = () => {
 
         if (block!==undefined && gas !== undefined) {
             setInfo(<div className='someBorder'>
-                <h2 id='ethBlock'>{block}<br/>{gas}</h2>
+                <h2 id='ethBlock'>
+                    {block}<br/>{gas}
+                    <h6 id='note'>* updates every minute *</h6>
+                </h2>
                 <div className='infoDiv'>{contracts}{pairs}</div>
             </div>)
         }
