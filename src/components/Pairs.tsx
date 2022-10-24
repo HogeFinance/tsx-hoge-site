@@ -4,31 +4,12 @@ import './Pairs.css'
 
 const Pairs = () => {
     const [info, setInfo] = useState<JSX.Element>(<>{''}</>)
-    const [result, setResult] = useState<any>()
+    const [block, setBlock] = useState<any>()
+    const [gas, setGas] = useState<any>()
 
-    const makeContractLine = (link:string, text:string, address:string) => {
-        return (
-            <h3>
-                {text} <a href={link + address} target='_blank' rel="noreferrer">contract</a>
-                <br/><small>{address}</small>
-            </h3>
-        )
-    }
-
-    const makePairLine= (link:string, chain:string, swap:string, address:string) => {
-        let url:string
-        if(chain === 'Polygon') {
-            url = link + '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0x58c1BBb508e96CfEC1787Acf6Afe1C7008A5B064?fee=100&twap=true&chainId=137'
-        } else { url = link + address}
-        return (
-            <h3>
-                {chain} dex pair <a href={url} target='_blank' rel="noreferrer">{swap}</a>
-                <br/><small>{address}</small>
-            </h3>
-        )
-    }
 
     useEffect(() => {
+        
         const hoge = {
             eth: "0xfAd45E47083e4607302aa43c65fB3106F1cd7607",
             bsc: "0xa4FFfc757e8c4F24E7b209C033c123D20983Ad40",
@@ -47,6 +28,27 @@ const Pairs = () => {
             okc: "0x6301Ce2a18410ad80c8511cA20288933dC32d61F"
         }
 
+        const makeContractLine = (link:string, text:string, address:string) => {
+            return (
+                <h3>
+                    {text} <a href={link + address} target='_blank' rel="noreferrer">contract</a>
+                    <br/><small>{address}</small>
+                </h3>
+            )
+        }
+
+        const makePairLine= (link:string, chain:string, swap:string, address:string) => {
+            let url:string
+            if(chain === 'Polygon') {
+                url = link + '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270/0x58c1BBb508e96CfEC1787Acf6Afe1C7008A5B064?fee=100&twap=true&chainId=137'
+            } else { url = link + address}
+            return (
+                <h3>
+                    {chain} dex pair <a href={url} target='_blank' rel="noreferrer">{swap}</a>
+                    <br/><small>{address}</small>
+                </h3>
+            )
+        }
         const contracts = <div className='someBorder'>
             {makeContractLine('https://etherscan.io/token/', 'Eth', hoge.eth)}
             {makeContractLine('https://bscscan.com/address/', 'BSC', hoge.bsc)}
@@ -65,24 +67,54 @@ const Pairs = () => {
             {makePairLine('https://okinfo.cherryswap.net/pair/', 'OKC','Cherryswap', pair.okc)}
         </div>
 
-        const go = async () => {
-            const api = process.env.REACT_APP_INFURA_API_KEY
-            if (api!==undefined) {
-                var url = 'https://mainnet.infura.io/v3/' + api
-                var customHttpProvider = new ethers.providers.JsonRpcProvider(url)
-                await customHttpProvider.getBlockNumber().then((result) => {
-                    setResult("Current ETH block number: " +  result)
-                })
-            }
+        if (block!==undefined && gas !== undefined) {
             setInfo(<div className='someBorder'>
-                <h2 id='ethBlock'>{result}</h2>
+                <h2 id='ethBlock'>{block}<br/>{gas}</h2>
                 <div className='infoDiv'>{contracts}{pairs}</div>
             </div>)
         }
 
+        const go =  () => {
+            if (block !== undefined || gas !== undefined) {return}
+            const api = process.env.REACT_APP_INFURA_API_KEY
+            if (api!==undefined) {
+                var url = 'https://mainnet.infura.io/v3/' + api
+                var customHttpProvider = new ethers.providers.JsonRpcProvider(url)
+                if (block === undefined){
+                     customHttpProvider.getBlockNumber()
+                    .then((res) => {
+                        setBlock("Current ETH block number: " +  res)
+                    })
+                }
+                if (gas === undefined) {
+                    customHttpProvider.getGasPrice()
+                    .then((res) => {
+                        const wei = res.mul(10**9)
+
+                        setGas("Estimated Gas Price: " + 
+                            ethers.utils.formatEther(wei).toString().split('.')[0] +
+                            ' Gwei')
+                    })
+                }
+                
+            }
+            
+            console.log('Go')
+
+        }
+
+        function clearStates() {
+            setBlock(undefined)
+            setGas(undefined)
+
+        }
+
         go()    
         
-    }, [result])
+        const min = 60 * 1000
+        window.setTimeout(clearStates, 1*min)
+        
+    }, [block, gas])
 
     return info
 }
