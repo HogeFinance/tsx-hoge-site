@@ -113,7 +113,7 @@ const Pairs = () => {
             go()
             setWait(true)
             const min = 60 * 1000
-            window.setTimeout(clearStates, .1*min)
+            window.setTimeout(clearStates, 1*min)
         }
         
     }, [block, gas, wait])
