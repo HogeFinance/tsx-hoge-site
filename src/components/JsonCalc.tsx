@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers'
 import './info.css'
-import { abi, address } from './info'
+import { address } from './info'
 import Moralis  from 'moralis';
 import { EvmChain } from '@moralisweb3/evm-utils';
 
@@ -20,10 +20,7 @@ const JsonCalc = () => {
 
         const makePairLine = async (_chain:EvmChain, _address:string) => {
             const chain = _chain;
-
-            // Pair Token address
             const pairAddress = _address;
-
             const response = await Moralis.EvmApi.defi.getPairReserves({
                 pairAddress,
                 chain,
@@ -91,6 +88,7 @@ const JsonCalc = () => {
             setEthBalance(undefined)
             setWait(false)
             setDone(false)
+            setPairs(<>{''}</>)
         }
 
         if (!wait){
@@ -101,7 +99,16 @@ const JsonCalc = () => {
 
         }
         if (pairs !== undefined) {
-            setInfo(<div className='infoDiv'>{pairs}</div>)
+            setInfo(
+                <div className='someBorder'>
+                    <div id='note'>* updates on reload *</div>
+                    <div className='infoDiv'>
+                        
+                        <br/>
+                        {pairs}
+                    </div>
+                </div>
+            )
             if (EthBalance!==undefined ) {
                 
             }

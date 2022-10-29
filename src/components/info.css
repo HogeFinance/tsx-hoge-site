@@ -29,7 +29,11 @@ a {
 }
 
 #note {
+    letter-spacing: 2px;
+    text-transform: capitalize;
+    color: #babababa;
     margin: 10px;
+    margin-top: 0;
     font-size: .4em;
 }
 
