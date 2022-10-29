@@ -3,18 +3,16 @@
     font-size: .6em;
     color: rgba(66, 231, 0, 0.936);
     text-shadow: 2px 1px #0d43d8d8;
-    padding: 10px;
     display: flex;
-
+    border: 7px inset rgba(13, 67, 216, 0.847);
+    border-radius: 50px;
 }
 
 .someBorder {
-    border: 10px ridge #0d43d8d8;
-    padding-top: 10px;
-    padding-bottom: 15px;
-    padding-left: 30px;
-    padding-right: 30px;
-    margin: 15px;
+    border: 5px outset #0d43d8d8;
+    border-radius: 30px;
+    padding: 1em;
+    margin: 1em;
 }
 
 a {

@@ -1,7 +1,8 @@
 //import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Pairs from './components/Pairs';
+import ContractInfo from './components/ContractInfo';
+import JsonCalc from './components/JsonCalc';
 
 function App() {
 
@@ -10,7 +11,9 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <br/>
-        <Pairs />
+        <ContractInfo />
+        <JsonCalc />
+        <p/>
       </header>
     </div>
   );
