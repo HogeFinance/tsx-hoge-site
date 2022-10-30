@@ -23,9 +23,11 @@ export const pair = {
 
 
 export const ContractInfo = () => {
+    const ethMsg = 'ETH Block Number'
+    const gasMsg = 'Esitmated Gas Price'
     const [info, setInfo] = useState<JSX.Element>(<>{''}</>)
-    const [block, setBlock] = useState<any>()
-    const [gas, setGas] = useState<any>()
+    const [block, setBlock] = useState<any>(ethMsg)
+    const [gas, setGas] = useState<any>(gasMsg)
     const [wait, setWait] = useState<boolean>(false)
 
     useEffect(() => {
@@ -71,29 +73,34 @@ export const ContractInfo = () => {
             {makePairLine('https://okinfo.cherryswap.net/pair/', 'OKC','Cherryswap', address.okc.pair)}
         </div>
 
-        if (block!==undefined && gas !== undefined) {
+        if (contracts!==undefined && pairs !== undefined) {
             setInfo(<div className='someBorder'>
+                
                 <h2 id='ethBlock'>
-                    {block}<br/>{gas}<br/>
-                    <small id='note'>* updates every minute *</small>
-                </h2>
-                <div className='infoDiv'>{contracts}{pairs}</div>
+                        {block}<br/>
+                        {gas}<br/>    
+                    </h2>
+                <div id='note'>* updates every minute *</div>
+                <div className='infoDiv'>
+                    {contracts}
+                    {pairs}
+                </div>
             </div>)
         }
 
         const go = async () => {
-            if (block !== undefined || gas !== undefined) {return}
+            if (block !== ethMsg || gas !== gasMsg) {return}
             const api = process.env.REACT_APP_INFURA_API_KEY
             if (api!==undefined) {
                 var url = 'https://mainnet.infura.io/v3/' + api
                 var customHttpProvider = new ethers.providers.JsonRpcProvider(url)
-                if (block === undefined){
+                if (block === ethMsg){
                     await customHttpProvider.getBlockNumber()
                     .then((res) => {
                         setBlock("Current ETH block number: " +  res)
                     })
                 }
-                if (gas === undefined) {
+                if (gas === gasMsg) {
                     await customHttpProvider.getGasPrice()
                     .then((res) => {
                         const wei = res.mul(10**9)
@@ -111,8 +118,8 @@ export const ContractInfo = () => {
         }
 
         function clearStates() {
-            setBlock(undefined)
-            setGas(undefined)
+            setBlock(ethMsg)
+            setGas(gasMsg)
             setWait(false)
         }
 

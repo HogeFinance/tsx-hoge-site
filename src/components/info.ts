@@ -10,10 +10,12 @@ export const address = {
         pair: "0xCed4F946feBCAc72d6727C07dE5B2664b2267a6F"
     },
     polygon: {
+        wmatic: "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
         hoge: "0x58c1BBb508e96CfEC1787Acf6Afe1C7008A5B064",
         pair: "0x15B09d465Ec44B6378dC92059fbDF0e4f65AEF43"
     },
     ftm: {
+        ftm: "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
         hoge: "0xF31778D591c558140398F46feCA42A6a2dbFFe90",
         pair: "0xda6115d4ecec98d1fe02c69d846405d41049eed2"
     },
@@ -23,6 +25,7 @@ export const address = {
         pair: "0xaf67e4b3dfe7fddbbc3c54047285fde72eaefd7c"
     },
     okc: {
+        usdt: "0x382bb369d343125bfb2117af9c149795c6c65c50",
         hoge: "0x9873795F5DAb11e1c0342C4a58904c59827ede0c",
         pair: "0x6301Ce2a18410ad80c8511cA20288933dC32d61F"
     }
