@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers'
 import './info.css'
-import { address } from './info'
+import { abi, address } from './info'
 import Moralis  from 'moralis';
 import { EvmChain } from '@moralisweb3/evm-utils';
 
@@ -10,41 +10,69 @@ const JsonCalc = () => {
     const [pairs, setPairs] = useState<JSX.Element>()
     const [wait, setWait] = useState<boolean>(false)
 
-    useEffect(() => {
-        const makePairLine = async (_chain:EvmChain, _address:string) => {
+    useEffect( () => {
+        const makePairLine = async (_chain:EvmChain, _address:string, _abi?:any) => {
+            let total = 0
+            if (_abi!==undefined) {
+                const options = {
+                    abi: _abi,
+                    functionName: "totalSupply",
+                    address: _address,
+                    chain: _chain
+                }
+                const tx = await Moralis.EvmApi.utils.runContractFunction(options)
+                total = parseFloat(ethers.utils.formatEther(tx.result))
+                console.log(_chain.name, "LP token totalSupply():", total)
+            }
             const chain = _chain;
             const pairAddress = _address;
-            const response = await Moralis.EvmApi.defi.getPairReserves({
+            const reserves = await Moralis.EvmApi.defi.getPairReserves({
                 pairAddress,
                 chain,
             });
+
             
-            if (response.result.reserve0 !== undefined && response.result.reserve1 !== undefined) {
-                const reserves = (r0:any, r1:any, token:string) => {
-                    let res = <div>{token}: {ethers.utils.formatEther(r0)}<br/>HOGE: {ethers.utils.formatEther(r1)}</div>
-                    if (token === 'WBNB') {
-                        res = <div>{token}: {ethers.utils.formatEther(r1)}<br/>HOGE: {ethers.utils.formatEther(r0)}</div>
-                    }
-                    return ( <h3>{chain.name} pair address<br/><small>{_address}</small><p/>{res}</h3> )
+            if (reserves.result.reserve0 !== undefined && reserves.result.reserve1 !== undefined) {
+                
+                const makeLine = (_token:any, _hoge:any, _tokenName:string) => {
+                    const token = parseFloat(ethers.utils.formatEther(_token))
+                    const hoge = parseFloat(ethers.utils.formatEther(_hoge))
+                    let LPhoge:any = (hoge / total) * 2
+                    if (total === 0) { LPhoge = 'needs more info'}
+                    console.log(_tokenName, "Hoge Voting Power per LP token:", LPhoge)
+                    const res = <div>
+                            {_tokenName}: {token.toFixed(9)}
+                            <br/>
+                            HOGE: {hoge.toLocaleString()}
+                        </div>
+                    return ( 
+                        <h3>
+                            {chain.name} pair address<br/>
+                            <small>{_address}</small><p/>
+                            {res}<p/>
+                            Hoge voting power per LP token:<br/>
+                            {LPhoge.toLocaleString()}
+                        </h3>
+                    )
                 }
                 let r0, r1
                 switch(chain.name?.substring(0,3)) {
                     case 'Eth':
-                        r0 = ethers.BigNumber.from(response.result.reserve0)
-                        r1 = ethers.BigNumber.from(response.result.reserve1).mul(10**9)
-                        return reserves(r0, r1, 'WETH')
+                        r0 = ethers.BigNumber.from(reserves.result.reserve0)
+                        r1 = ethers.BigNumber.from(reserves.result.reserve1).mul(10**9)
+                        return makeLine(r0, r1, 'WETH')
                     case 'Bin':
-                        r0 = ethers.BigNumber.from(response.result.reserve0).mul(10**9)
-                        r1 = ethers.BigNumber.from(response.result.reserve1)
-                        return reserves(r0, r1, 'WBNB')
+                        r0 = ethers.BigNumber.from(reserves.result.reserve0).mul(10**9)
+                        r1 = ethers.BigNumber.from(reserves.result.reserve1)
+                        return makeLine(r1, r0, 'WBNB')
                     case 'Pol':
-                        r0 = ethers.BigNumber.from(response.result.reserve0)
-                        r1 = ethers.BigNumber.from(response.result.reserve1).mul(10**9)
-                        return reserves(r0, r1, 'MATIC')
+                        r0 = ethers.BigNumber.from(reserves.result.reserve0)
+                        r1 = ethers.BigNumber.from(reserves.result.reserve1).mul(10**9)
+                        return makeLine(r0, r1, 'MATIC',)
                     case 'Fan':
-                        r0 = ethers.BigNumber.from(response.result.reserve0)
-                        r1 = ethers.BigNumber.from(response.result.reserve1).mul(10**9)
-                        return reserves(r0, r1, 'FTM')
+                        r0 = ethers.BigNumber.from(reserves.result.reserve0)
+                        r1 = ethers.BigNumber.from(reserves.result.reserve1).mul(10**9)
+                        return makeLine(r0, r1, 'FTM')
                 }
             }
         }
@@ -56,9 +84,9 @@ const JsonCalc = () => {
             })
             .then( async () => {
                 const pairs = <div className='someBorder'>
-                    {await makePairLine(EvmChain.ETHEREUM, address.eth.pair)}<br/>
-                    {await makePairLine(EvmChain.BSC, address.bsc.pair)}<br/>
-                    {await makePairLine(EvmChain.POLYGON, address.polygon.pair)}<br/>
+                    {await makePairLine(EvmChain.ETHEREUM, address.eth.pair, abi.eth.pair)}<br/>
+                    {await makePairLine(EvmChain.BSC, address.bsc.pair, abi.bsc.pair)}<br/>
+                    {await makePairLine(EvmChain.POLYGON, address.polygon.pair, abi.polygon.pair)}<br/>
                     {await makePairLine(EvmChain.FANTOM, address.ftm.pair)}
                 </div>
     /*              {await makePairLine(EvmChain.create("0x64"), address.xdai.pair)}
