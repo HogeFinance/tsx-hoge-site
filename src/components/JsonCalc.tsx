@@ -7,9 +7,8 @@ import { EvmChain } from '@moralisweb3/evm-utils';
 
 const JsonCalc = () => {
     const [info, setInfo] = useState<JSX.Element>(<>{''}</>)
-    const [pairs, setPairs] = useState<JSX.Element>(<>{''}</>)
+    const [pairs, setPairs] = useState<JSX.Element>()
     const [wait, setWait] = useState<boolean>(false)
-    const [done, setDone] = useState<boolean>(false)
 
     useEffect(() => {
         const makePairLine = async (_chain:EvmChain, _address:string) => {
@@ -21,8 +20,6 @@ const JsonCalc = () => {
             });
             
             if (response.result.reserve0 !== undefined && response.result.reserve1 !== undefined) {
-                //console.log(response.result);
-                let r0, r1
                 const reserves = (r0:any, r1:any, token:string) => {
                     let res = <div>{token}: {ethers.utils.formatEther(r0)}<br/>HOGE: {ethers.utils.formatEther(r1)}</div>
                     if (token === 'WBNB') {
@@ -30,6 +27,7 @@ const JsonCalc = () => {
                     }
                     return ( <h3>{chain.name} pair address<br/><small>{_address}</small><p/>{res}</h3> )
                 }
+                let r0, r1
                 switch(chain.name?.substring(0,3)) {
                     case 'Eth':
                         r0 = ethers.BigNumber.from(response.result.reserve0)
@@ -47,9 +45,8 @@ const JsonCalc = () => {
                         r0 = ethers.BigNumber.from(response.result.reserve0)
                         r1 = ethers.BigNumber.from(response.result.reserve1).mul(10**9)
                         return reserves(r0, r1, 'FTM')
-                  }
+                }
             }
-
         }
 
         const go = async () => {
@@ -57,19 +54,17 @@ const JsonCalc = () => {
                 apiKey:  process.env.REACT_APP_MORALIS_API_KEY
                 // ...and any other configuration
             })
-            .then( async ()=>{
-    /*              {await makePairLine(EvmChain.create("0x64"), address.xdai.pair)}
-                    {await makePairLine(EvmChain.create("0x42"), address.okc.pair)}           */
+            .then( async () => {
                 const pairs = <div className='someBorder'>
                     {await makePairLine(EvmChain.ETHEREUM, address.eth.pair)}<br/>
                     {await makePairLine(EvmChain.BSC, address.bsc.pair)}<br/>
                     {await makePairLine(EvmChain.POLYGON, address.polygon.pair)}<br/>
                     {await makePairLine(EvmChain.FANTOM, address.ftm.pair)}
-
                 </div>
+    /*              {await makePairLine(EvmChain.create("0x64"), address.xdai.pair)}
+                    {await makePairLine(EvmChain.create("0x42"), address.okc.pair)}           */
                 setPairs(pairs)
             })
-            .then(()=>{ setDone(true) })
         }
 
         if (!wait){
@@ -88,7 +83,7 @@ const JsonCalc = () => {
             )
         }
         
-    }, [done, pairs, wait])
+    }, [pairs, wait])
 
     return info
 }
