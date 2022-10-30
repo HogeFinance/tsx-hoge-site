@@ -69,9 +69,7 @@ const JsonCalc = () => {
                 </div>
                 setPairs(pairs)
             })
-            .then(()=>{
-                setDone(true)  
-            })
+            .then(()=>{ setDone(true) })
         }
 
         if (!wait){
