@@ -37,7 +37,7 @@ export const ContractInfo = () => {
         const makeContractLine = (_link:string, _text:string, _address:string) => {
             return (
                 <h3>
-                    {_text} <a href={_link + address} target='_blank' rel="noreferrer">contract</a>
+                    {_text} <a href={_link + _address} target='_blank' rel="noreferrer">contract</a>
                     <br/><small>{_address}</small>
                 </h3>
             )
