@@ -37,7 +37,7 @@ export const ContractInfo = () => {
         const makeContractLine = (_link:string, _text:string, _address:string) => {
             return (
                 <h3>
-                    {_text} <a href={_link + _address} target='_blank' rel="noreferrer">contract</a>
+                    {_text} <a href={_link + address} target='_blank' rel="noreferrer">contract</a>
                     <br/><small>{_address}</small>
                 </h3>
             )
@@ -56,21 +56,21 @@ export const ContractInfo = () => {
             )
         }
         const contracts = <div className='someBorder'>
-            {makeContractLine('https://etherscan.io/token/', 'Eth', hoge.eth)}
-            {makeContractLine('https://bscscan.com/address/', 'BSC', hoge.bsc)}
-            {makeContractLine('https://polygonscan.com/address/', 'Polygon', hoge.polygon)}
-            {makeContractLine('https://ftmscan.com/token/', 'FTM', hoge.ftm)}
-            {makeContractLine('https://blockscout.com/xdai/mainnet/address/', 'xDai', hoge.xdai)}
-            {makeContractLine('https://www.oklink.com/en/okc/address/', 'OKC', hoge.okc)}
+            {makeContractLine('https://etherscan.io/token/', 'Eth', address.eth.hoge)}
+            {makeContractLine('https://bscscan.com/address/', 'BSC', address.bsc.hoge)}
+            {makeContractLine('https://polygonscan.com/address/', 'Polygon', address.polygon.hoge)}
+            {makeContractLine('https://ftmscan.com/token/', 'FTM', address.ftm.hoge)}
+            {makeContractLine('https://blockscout.com/xdai/mainnet/address/', 'xDai', address.xdai.hoge)}
+            {makeContractLine('https://www.oklink.com/en/okc/address/', 'OKC', address.okc.hoge)}
         </div>
 
         const pairs = <div className='someBorder'>
-            {makePairLine('https://v2.info.uniswap.org/pair/', 'Eth', 'Uniswap', pair.eth)}
-            {makePairLine('https://pancakeswap.finance/info/pools/', 'BSC','Pancakeswap', pair.bsc)}
-            {makePairLine('https://app.sushi.com/trident/pool/', 'Polygon','Sushiswap', pair.polygon)}
-            {makePairLine('https://info.shibafantom.finance/pair/', 'FTM','Shibaswap', pair.ftm)}
-            {makePairLine('https://info.honeyswap.org/#/pair/', 'xDai','Honeyswap', pair.xdai)}
-            {makePairLine('https://okinfo.cherryswap.net/pair/', 'OKC','Cherryswap', pair.okc)}
+            {makePairLine('https://v2.info.uniswap.org/pair/', 'Eth', 'Uniswap', address.eth.pair)}
+            {makePairLine('https://pancakeswap.finance/info/pools/', 'BSC','Pancakeswap', address.bsc.pair)}
+            {makePairLine('https://app.sushi.com/trident/pool/', 'Polygon','Sushiswap', address.polygon.pair)}
+            {makePairLine('https://info.shibafantom.finance/pair/', 'FTM','Shibaswap', address.ftm.pair)}
+            {makePairLine('https://info.honeyswap.org/#/pair/', 'xDai','Honeyswap', address.xdai.pair)}
+            {makePairLine('https://okinfo.cherryswap.net/pair/', 'OKC','Cherryswap', address.okc.pair)}
         </div>
 
         if (contracts!==undefined && pairs !== undefined) {
