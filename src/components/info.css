@@ -39,12 +39,12 @@ a {
     font-size: .4em;
 }
 
-@media screen and (min-width: 1160px) {
+@media screen and (min-width: 1700px) {
     .infoDiv {
         flex-direction: row;
     }
 }
-@media screen and (min-width: 600px) and (max-width: 1160px) {
+@media screen and (min-width: 600px) and (max-width: 1700px) {
     .infoDiv {
         flex-direction: column;
     }
