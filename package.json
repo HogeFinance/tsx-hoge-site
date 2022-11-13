@@ -10,6 +10,8 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "ethers": "^5.7.2",
+    "moralis": "^2.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -39,5 +41,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-syntax-flow": "^7.14.5",
+    "@babel/plugin-transform-react-jsx": "^7.14.9",
+    "@testing-library/dom": ">=7.21.4",
+    "assert": "^2.0.0",
+    "stream": "^0.0.2",
+    "stream-browserify": "^3.0.0"
   }
 }
