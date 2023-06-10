@@ -1,25 +1,21 @@
-import { useState, useEffect } from 'react';
-import { ethers } from 'ethers'
+import React, { useState, useEffect } from 'react';
+import { ethers, toBigInt } from 'ethers'
 import './info.css'
-import { address } from './info'
+import { ADDRESS, URL }  from './info'
 
-export const hoge = {
-    eth: "0xfAd45E47083e4607302aa43c65fB3106F1cd7607",
-    bsc: "0xa4FFfc757e8c4F24E7b209C033c123D20983Ad40",
-    polygon: "0x58c1BBb508e96CfEC1787Acf6Afe1C7008A5B064",
-    ftm: "0xF31778D591c558140398F46feCA42A6a2dbFFe90",
-    xdai: "0xDfF7fcF6a86F7Dc86E7facECA502851f82a349A6",
-    okc: "0x9873795F5DAb11e1c0342C4a58904c59827ede0c"
+
+class Ethernets {
+    provider;
+    
+    constructor(rpcUrl:string) {
+        try {
+            this.provider = new ethers.JsonRpcProvider(rpcUrl);
+        } catch (error) { console.error(error)}
+    }
 }
 
-export const pair = {
-    eth: "0x7FD1de95FC975fbBD8be260525758549eC477960",
-    bsc: "0xCed4F946feBCAc72d6727C07dE5B2664b2267a6F",
-    polygon: "0x15B09d465Ec44B6378dC92059fbDF0e4f65AEF43",
-    ftm: "0xda6115d4ecec98d1fe02c69d846405d41049eed2",
-    xdai: "0xaf67e4b3dfe7fddbbc3c54047285fde72eaefd7c",
-    okc: "0x6301Ce2a18410ad80c8511cA20288933dC32d61F"
-}
+const ETH = new Ethernets(URL.ethRPC)//(URL.infura + process.env.REACT_APP_INFURA_API_KEY);
+
 
 
 export const ContractInfo = () => {
@@ -56,28 +52,24 @@ export const ContractInfo = () => {
             )
         }
         const contracts = <div className='someBorder'>
-            {makeContractLine('https://etherscan.io/token/', 'Eth', address.eth.hoge)}
-            {makeContractLine('https://bscscan.com/address/', 'BSC', address.bsc.hoge)}
-            {makeContractLine('https://polygonscan.com/address/', 'Polygon', address.polygon.hoge)}
-            {makeContractLine('https://ftmscan.com/token/', 'FTM', address.ftm.hoge)}
-            {makeContractLine('https://blockscout.com/xdai/mainnet/address/', 'xDai', address.xdai.hoge)}
-            {makeContractLine('https://www.oklink.com/en/okc/address/', 'OKC', address.okc.hoge)}
+            {makeContractLine('https://etherscan.io/token/', 'Eth', ADDRESS.eth.hoge)}
+            {makeContractLine('https://bscscan.com/address/', 'BSC', ADDRESS.bsc.hoge)}
+            {makeContractLine('https://polygonscan.com/address/', 'Polygon', ADDRESS.polygon.hoge)}
+            {makeContractLine('https://ftmscan.com/token/', 'FTM', ADDRESS.ftm.hoge)}
+            {makeContractLine('https://blockscout.com/xdai/mainnet/address/', 'xDai', ADDRESS.xdai.hoge)}
+            {makeContractLine('https://www.oklink.com/en/okc/address/', 'OKC', ADDRESS.okc.hoge)}
         </div>
 
         const pairs = <div className='someBorder'>
-            {makePairLine('https://v2.info.uniswap.org/pair/', 'Eth', 'Uniswap', address.eth.pair)}
-            {makePairLine('https://pancakeswap.finance/info/pools/', 'BSC','Pancakeswap', address.bsc.pair)}
-            {makePairLine('https://app.sushi.com/trident/pool/', 'Polygon','Sushiswap', address.polygon.pair)}
-            {makePairLine('https://info.shibafantom.finance/pair/', 'FTM','Shibaswap', address.ftm.pair)}
-            {makePairLine('https://info.honeyswap.org/#/pair/', 'xDai','Honeyswap', address.xdai.pair)}
-            {makePairLine('https://okinfo.cherryswap.net/pair/', 'OKC','Cherryswap', address.okc.pair)}
+            {makePairLine('https://v2.info.uniswap.org/pair/', 'Eth', 'Uniswap', ADDRESS.eth.pair)}
+            {makePairLine('https://pancakeswap.finance/info/pools/', 'BSC','Pancakeswap', ADDRESS.bsc.pair)}
+            {makePairLine('https://app.sushi.com/trident/pool/', 'Polygon','Sushiswap', ADDRESS.polygon.pair)}
+            {makePairLine('https://info.shibafantom.finance/pair/', 'FTM','Shibaswap', ADDRESS.ftm.pair)}
+            {makePairLine('https://info.honeyswap.org/#/pair/', 'xDai','Honeyswap', ADDRESS.xdai.pair)}
+            {makePairLine('https://okinfo.cherryswap.net/pair/', 'OKC','Cherryswap', ADDRESS.okc.pair)}
         </div>
 
         if (contracts!==undefined && pairs !== undefined) {
-            const optiswap = 'https://optiswap.pro/#swap/0xfAd45E47083e4607302aa43c65fB3106F1cd7607'
-            const groupLP = 'https://optiswap.pro/#pool/0xfAd45E47083e4607302aa43c65fB3106F1cd7607'
-            const otcswap = 'https://otcswap.pro/'
-            const optivaults = 'https://optiswap.pro/#vault/0xfAd45E47083e4607302aa43c65fB3106F1cd7607/0xB282B19A9028482BEADEED12133F657B7993f825'
 
             setInfo(<div className='someBorder'>
                 
@@ -87,13 +79,6 @@ export const ContractInfo = () => {
                     </h2>
                 <div id='note'>* updates every minute *</div>
                 <div className='infoDiv'>
-                    <h2 id='optiswap'>
-                        <a href='https://optiswap.pro/' target='_blank' rel="noreferrer">OptiSwap.Pro</a><p/>
-                        <a href={optiswap} target='_blank' rel="noreferrer">OptiSwap</a><br/>
-                        <a href={groupLP} target='_blank' rel="noreferrer">GroupLP</a><br/>
-                        <a href={otcswap} target='_blank' rel="noreferrer">OTCswap</a><br/>
-                        <a href={optivaults} target='_blank' rel="noreferrer">OptiVaults</a><br/>
-                    </h2>
                     {contracts}
                     {pairs}
                 </div>
@@ -102,31 +87,28 @@ export const ContractInfo = () => {
 
         const go = async () => {
             if (block !== ethMsg || gas !== gasMsg) {return}
-            const api = process.env.REACT_APP_INFURA_API_KEY
-            if (api!==undefined) {
-                var url = 'https://mainnet.infura.io/v3/' + api
-                var customHttpProvider = new ethers.providers.JsonRpcProvider(url)
+            
                 if (block === ethMsg){
-                    await customHttpProvider.getBlockNumber()
+                    await ETH.provider?.getBlockNumber()
                     .then((res) => {
                         setBlock("Current ETH block number: " +  res)
                     })
                 }
-                if (gas === gasMsg) {
-                    await customHttpProvider.getGasPrice()
-                    .then((res) => {
-                        const wei = res.mul(10**9)
+                if (gas === gasMsg && ETH.provider !== undefined) {
+                    const feeData = JSON.parse(JSON.stringify(await ETH.provider.getFeeData()));
+                    console.log(feeData)
+                    const gasFee = toBigInt(feeData?.gasPrice) //await feeData?.gasPrice()
+                    let wei
+                    if (gasFee) {
+                        wei = gasFee * toBigInt(10**9)
 
                         setGas("Estimated Gas Price: " + 
-                            ethers.utils.formatEther(wei).toString().split('.')[0] +
+                            ethers.formatEther(wei).toString().split('.')[0] +
                             ' Gwei')
-                    })
-                }
-                
-            }
-            
-            console.log('Go')
+                    }   
+                } 
 
+            console.log('Go')
         }
 
         function clearStates() {

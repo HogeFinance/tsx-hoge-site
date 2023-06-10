@@ -38,7 +38,18 @@ a {
     margin-top: 0;
     font-size: .4em;
 }
-
+.center{
+    position: relative;
+    left: 50%;
+    -ms-transform: translate(-50%);
+    transform: translate(-50%);
+}        
+.voteButton{
+    width: 20vw; 
+}
+.inputBox{
+    width: 35vw;
+}
 @media screen and (min-width: 1700px) {
     .infoDiv {
         flex-direction: row;
@@ -54,6 +65,7 @@ a {
         flex-direction: column;
         font-size: .5em;
         padding: .2em;
+
     }
     .someBorder{
         padding: .5em;
